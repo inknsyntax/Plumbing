@@ -1,5 +1,3 @@
-import React from 'react';
-
 /**
  * Schema.org Structured Data Generator
  * Implements LocalBusiness, ProfessionalService, and Organization markup
@@ -138,18 +136,3 @@ export const generateBreadcrumbSchema = (items: Array<{ name: string; url: strin
   })),
 });
 
-/**
- * React Hook for injecting Schema.org scripts into document head
- */
-export const useSchemaMarkup = (schema: object) => {
-  React.useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(schema);
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, [schema]);
-};

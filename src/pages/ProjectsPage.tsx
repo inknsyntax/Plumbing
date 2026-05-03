@@ -1,3 +1,5 @@
+import { COLORS, SPACING } from '../utils/constants'
+
 interface Project {
   id: string
   name: string
@@ -126,21 +128,8 @@ const featuredProjects: Project[] = [
 ]
 
 const theme = {
-  colors: {
-    obsidianGray: '#1A1A1B',
-    sterileWhite: '#F5F5F7',
-    cobaltBlue: '#0047AB',
-    brushedSteel: '#A9A9A9',
-    warningRed: '#D32F2F',
-    successGreen: '#388E3C',
-  },
-  spacing: {
-    xs: '0.5rem',
-    sm: '1rem',
-    md: '1.5rem',
-    lg: '2rem',
-    xl: '3rem',
-  },
+  colors: COLORS,
+  spacing: SPACING,
 }
 
 export default function ProjectsPage() {

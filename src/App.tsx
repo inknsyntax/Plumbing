@@ -19,59 +19,43 @@ function AppContent() {
   const location = useLocation()
 
   useEffect(() => {
-    // Inject Schema.org markup into document head
+    // Inject Schema.org markup into document head (once on mount, not on every route change)
     const localBusinessSchema = document.createElement('script')
     localBusinessSchema.type = 'application/ld+json'
     localBusinessSchema.textContent = JSON.stringify(
       generateLocalBusinessSchema({
-        name: 'Enterprise Plumbing Solutions',
-        description:
-          'Tier-1 industrial and residential plumbing infrastructure provider offering comprehensive solutions for complex mechanical systems.',
-        telephone: '+1-XXX-XXX-XXXX',
+        name: 'Chicago Highlight Plumbing',
+        description: 'Licensed, insured, trusted Chicago plumbing company. Emergency & scheduled service, residential & commercial.',
+        telephone: '+1-555-234-5678',
         address: {
-          streetAddress: '[Global HQ Address]',
-          addressLocality: '[City]',
-          addressRegion: '[State]',
-          postalCode: '[Postal Code]',
+          streetAddress: 'Chicago, IL',
+          addressLocality: 'Chicago',
+          addressRegion: 'IL',
+          postalCode: '60601',
           addressCountry: 'US',
         },
-        email: 'dispatch@enterprise-plumbing.com',
-        foundingDate: '2010-01-15',
-        sameAs: [
-          'https://www.linkedin.com/company/enterprise-plumbing',
-          'https://www.youtube.com/channel/enterprise-plumbing',
-        ],
-        areaServed: [
-          'United States',
-          'Multi-State Operations',
-          'Industrial Facilities',
-          'Residential Properties',
-        ],
-        priceRange: '$$$',
+        email: 'contact@chicagohighlight.com',
+        foundingDate: '2015-01-01',
+        sameAs: [],
+        areaServed: ['Chicago', 'Illinois'],
+        priceRange: '$$',
       })
     )
     document.head.appendChild(localBusinessSchema)
 
     const professionalSchema = document.createElement('script')
     professionalSchema.type = 'application/ld+json'
-    professionalSchema.textContent = JSON.stringify(
-      generateProfessionalServiceSchema()
-    )
+    professionalSchema.textContent = JSON.stringify(generateProfessionalServiceSchema())
     document.head.appendChild(professionalSchema)
 
     const reviewSchema = document.createElement('script')
     reviewSchema.type = 'application/ld+json'
-    reviewSchema.textContent = JSON.stringify(
-      generateAggregateReviewSchema(4.9, 187)
-    )
+    reviewSchema.textContent = JSON.stringify(generateAggregateReviewSchema(4.9, 187))
     document.head.appendChild(reviewSchema)
 
     const styleTag = document.createElement('style')
     styleTag.textContent = globalStyles
     document.head.appendChild(styleTag)
-
-    // Scroll to top on route change
-    window.scrollTo(0, 0)
 
     return () => {
       document.head.removeChild(localBusinessSchema)
@@ -79,34 +63,19 @@ function AppContent() {
       document.head.removeChild(reviewSchema)
       document.head.removeChild(styleTag)
     }
+  }, []) // Empty dependency array - schema only injected once on mount
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0)
   }, [location])
-
-  const handleRequestProposal = () => {
-    alert(
-      'RFP Module: Initiate formal proposal request. Integration with secure client portal.'
-    )
-  }
-
-  const handleEmergency = () => {
-    alert(
-      'EMERGENCY DISPATCH: Contact 24/7 response team. Dial 1-XXX-EMERGENCY'
-    )
-  }
 
   return (
     <>
       <Header />
       <main style={{ minHeight: 'calc(100vh - 120px)' }}>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <HomePage
-                onRequestProposal={handleRequestProposal}
-                onEmergency={handleEmergency}
-              />
-            }
-          />
+          <Route path="/" element={<HomePage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/about" element={<AboutPage />} />

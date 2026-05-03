@@ -271,11 +271,7 @@ const galleryImages: GalleryImage[] = [
   },
 ];
 
-interface GalleryProps {
-  onImageSelect?: (image: GalleryImage) => void;
-}
-
-const Gallery: React.FC<GalleryProps> = ({ onImageSelect }) => {
+const Gallery: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories = ['industrial', 'residential', 'emergency', 'maintenance'];
@@ -320,7 +316,6 @@ const Gallery: React.FC<GalleryProps> = ({ onImageSelect }) => {
             <div
               key={image.id}
               className="gallery-item"
-              onClick={() => onImageSelect?.(image)}
             >
               <div className="gallery-image-container">
                 {image.icon}
