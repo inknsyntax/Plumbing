@@ -19,7 +19,7 @@ function AppContent() {
   const location = useLocation()
 
   useEffect(() => {
-    // Inject Schema.org markup into document head (once on mount, not on every route change)
+    // Inject Schema.org structured data into document head (SEO only, not styles)
     const localBusinessSchema = document.createElement('script')
     localBusinessSchema.type = 'application/ld+json'
     localBusinessSchema.textContent = JSON.stringify(
@@ -53,15 +53,10 @@ function AppContent() {
     reviewSchema.textContent = JSON.stringify(generateAggregateReviewSchema(4.9, 187))
     document.head.appendChild(reviewSchema)
 
-    const styleTag = document.createElement('style')
-    styleTag.textContent = globalStyles
-    document.head.appendChild(styleTag)
-
     return () => {
       document.head.removeChild(localBusinessSchema)
       document.head.removeChild(professionalSchema)
       document.head.removeChild(reviewSchema)
-      document.head.removeChild(styleTag)
     }
   }, []) // Empty dependency array - schema only injected once on mount
 
@@ -72,6 +67,8 @@ function AppContent() {
 
   return (
     <>
+      {/* Inject global styles synchronously so @keyframes are available on first render */}
+      <style>{globalStyles}</style>
       <Header />
       <main style={{ minHeight: 'calc(100vh - 120px)' }}>
         <Routes>
