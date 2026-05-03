@@ -89,7 +89,7 @@ function AppContent() {
 
 function App() {
   return (
-    <Router basename="/plumbing/">
+    <Router basename="/Plumbing/">
       <AppContent />
     </Router>
   )
